@@ -7,17 +7,17 @@ const Head = () => {
         <div className='container d_flex'>
           <div className='left row'>
             <i className='fa fa-phone'></i>
-            <label> +88012 3456 7894</label>
+            <label> +94 767078124</label>
             <i className='fa fa-envelope'></i>
-            <label> support@ui-lib.com</label>
+            <label>herble.enterprices@gmail.com</label>
           </div>
           <div className='right row RText'>
-            <label>Theme FAQ"s</label>
-            <label>Need Help?</label>
-            <span>🏳️‍⚧️</span>
+            {/* <label>Theme FAQ"s</label>
+            <label>Need Help?</label> */}
+            {/* <span>🏳️‍⚧️</span>
             <label>EN</label>
             <span>🏳️‍⚧️</span>
-            <label>USD</label>
+            <label>USD</label> */}
           </div>
         </div>
       </section>
