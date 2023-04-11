@@ -18,16 +18,16 @@ const RecentCard = () => {
                   <i className='fa fa-heart'></i>
                 </div>
                 <h4>{name}</h4>
-                <p>
+                {/* <p>
                   <i className='fa fa-location-dot'></i> {location}
-                </p>
+                </p> */}
               </div>
-              <div className='button flex'>
+              {/* <div className='button flex'>
                 <div>
                   <button className='btn2'>{price}</button> <label htmlFor=''>/sqft</label>
                 </div>
                 <span>{type}</span>
-              </div>
+              </div> */}
             </div>
           )
         })}
