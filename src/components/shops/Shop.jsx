@@ -8,7 +8,7 @@ const Shop = ({ addToCart, shopItems }) => {
     <>
       <section className='shop background'>
         <div className='container d_flex'>
-          <Catg />
+          {/* <Catg /> */}
 
           <div className='contentWidth'>
             <div className='heading d_flex'>
