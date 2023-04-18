@@ -7,11 +7,12 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart(state, action) {
-      const { sellerId, productId } = action.payload;
+      const { sellerId, sellerName, productId, productName } = action.payload;
 
       const sellerCartItem = {
         product: {
           _id: productId,
+          name: productName,
         },
         quantity: 1,
       };
@@ -23,6 +24,7 @@ const cartSlice = createSlice({
       if (sellerCartItemIndex === -1) {
         state.cart.push({
           sellerId,
+          sellerName,
           sellerCart: [sellerCartItem],
         });
       } else {

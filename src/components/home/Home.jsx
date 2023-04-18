@@ -7,12 +7,12 @@ import Price from "./price/Price"
 import Recent from "./recent/Recent"
 import Team from "./team/Team"
 
-const Home = ({list, addToCart}) => {
+const Home = () => {
   return (
     <>
       <Hero />
       <Featured />
-      <Recent list={list} addToCart={addToCart}/>
+      <Recent/>
       {/* <Awards /> */}
       {/* <Location /> */}
       {/* <Team /> */}

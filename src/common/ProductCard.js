@@ -26,12 +26,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const ProductCard = ({
-  _id,
-  name,
-  price,
-  rating,
-  imageFirebaseStorageRef,
-  sellerId,
+  item,
   addToCart,
   removeFromCart,
   isAvailableInCart,
@@ -68,7 +63,7 @@ const ProductCard = ({
                 component="div"
                 sx={{ mb: 0, textAlign: "center", fontWeight: "bold" }}
               >
-                {name}
+                {item.name}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -78,7 +73,7 @@ const ProductCard = ({
                 component="div"
                 sx={{ mb: 0, textAlign: "center", fontWeight: "bold" }}
               >
-                Rs {price}
+                Rs {item.price}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -88,7 +83,7 @@ const ProductCard = ({
                 component="div"
                 sx={{ mt: 2, textAlign: "center", fontWeight: "bold" }}
               >
-                {renderStarRating(rating)}
+                {renderStarRating(item.rating)}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -102,14 +97,21 @@ const ProductCard = ({
                   <button
                     type="button"
                     class="btn btn-warning"
-                    onClick={() => removeFromCart(sellerId, _id)}
+                    onClick={() => removeFromCart(item.seller.user, item._id)}
                   >
                     <i class="fa fa fa-minus"></i>
                   </button>
                 ) : (
                   <button
                     class="btn btn-success"
-                    onClick={() => addToCart(sellerId, _id)}
+                    onClick={() =>
+                      addToCart(
+                        item.seller.user,
+                        item.seller.name,
+                        item._id,
+                        item.name
+                      )
+                    }
                   >
                     <i class="fa fa-shopping-cart"></i>
                   </button>

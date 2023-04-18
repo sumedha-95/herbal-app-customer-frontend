@@ -7,7 +7,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import store from "./store";
 
-
 let persistor = persistStore(store);
 
 function App() {
@@ -15,7 +14,7 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Pages />
-        </PersistGate>
+      </PersistGate>
     </Provider>
   );
 }

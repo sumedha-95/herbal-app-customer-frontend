@@ -21,15 +21,17 @@ const Recent = () => {
   const [product, setProduct] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
 
-  const addToCart = (sellerId, productId) => {
-    dispatch(cartActions.addToCart({ sellerId, productId }));
+  const addToCart = (sellerId, sellerName, productId, productName) => {
+    dispatch(
+      cartActions.addToCart({ sellerId, sellerName, productId, productName })
+    );
   };
 
   const removeFromCart = (sellerId, productId) => {
     dispatch(cartActions.removeFromCart({ sellerId, productId }));
   };
 
-  const isExist = (sellerId, productId) => {
+  const isProductExistInCart = (sellerId, productId) => {
     // find seller cart
     const sellerCartItemIndex = cartState.cart.findIndex(
       (item) => item.sellerId === sellerId
@@ -103,15 +105,13 @@ const Recent = () => {
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <ProductCard
-                  _id={item._id}
-                  name={item.name}
-                  price={item.price}
-                  rating={item.rating}
-                  imageFirebaseStorageRef={item.image.firebaseStorageRef}
-                  sellerId={item.seller.user}
+                  item={item}
                   addToCart={addToCart}
                   removeFromCart={removeFromCart}
-                  isAvailableInCart={isExist(item.seller.user, item._id)}
+                  isAvailableInCart={isProductExistInCart(
+                    item.seller.user,
+                    item._id
+                  )}
                 />
               </Link>
             </Grid>
