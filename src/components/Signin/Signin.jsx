@@ -7,16 +7,37 @@ import {
   CircularProgress,
 } from "@mui/material";
 import colors from "../assets/colors";
-
+import auth from "../../models/auth";
+import { createUser } from "../../service/auth.service";
+import { popAlert } from "../../utils/alerts";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/authSlice";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
 
-const handleSubmit = async (e) => {
+  const [inputs, setInputs] = useState(auth);
+
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    const response = await createUser(inputs);
+    if (response.success) {
+      setLoading(false);
+      dispatch(authActions.login(response.data));
+      response?.data &&
+        popAlert("Success!", response?.data, "success").then((res) => {
+          window.location.replace("/");
+        });
+    } else {
+      response?.data && popAlert("Error!", response?.data, "error");
+      response?.data && setErrors(response.data);
+    }
+    setLoading(false);
   };
-    const [errors, setErrors] = useState({});
-      const [loading, setLoading] = useState(false);
-
   return (
     <React.Fragment>
       <Box
@@ -45,7 +66,7 @@ const handleSubmit = async (e) => {
               color="primary"
               textAlign={"center"}
               sx={{ mb: 6 }}
-              style={{  color: "black" }}
+              style={{ color: "black" }}
             >
               Sign In
             </Typography>
@@ -56,13 +77,13 @@ const handleSubmit = async (e) => {
                   variant="filled"
                   label="Email"
                   fullWidth
-                //   value={inputs.email}
-                //   onChange={(e) =>
-                //     setInputs({
-                //       ...inputs,
-                //       email: e.target.value,
-                //     })
-                //   }
+                  value={inputs.email}
+                  onChange={(e) =>
+                    setInputs({
+                      ...inputs,
+                      email: e.target.value,
+                    })
+                  }
                 />
                 {errors["email"] && (
                   <Typography color="error">{errors["email"]}</Typography>
@@ -76,13 +97,13 @@ const handleSubmit = async (e) => {
                   label="Password"
                   type="password"
                   fullWidth
-                //   value={inputs.password}
-                //   onChange={(e) =>
-                //     setInputs({
-                //       ...inputs,
-                //       password: e.target.value,
-                //     })
-                //   }
+                  value={inputs.password}
+                  onChange={(e) =>
+                    setInputs({
+                      ...inputs,
+                      password: e.target.value,
+                    })
+                  }
                 />
                 {errors["password"] && (
                   <Typography color="error">{errors["password"]}</Typography>
@@ -90,8 +111,8 @@ const handleSubmit = async (e) => {
               </Box>
 
               <Box sx={{ cursor: "pointer" }}>
-                <Typography variant="h7" style={{  color: "black" }}>
-                     Forget Your Password?
+                <Typography variant="h7" style={{ color: "black" }}>
+                  Forget Your Password?
                 </Typography>
               </Box>
               <Box sx={{ m: 2 }}>
@@ -107,7 +128,7 @@ const handleSubmit = async (e) => {
               </Box>
             </form>
             <Box textAlign={"center"} sx={{ cursor: "pointer" }}>
-              <Typography variant="h7" style={{  color: "black" }}>
+              <Typography variant="h7" style={{ color: "black" }}>
                 Do you need to create an account?
               </Typography>
             </Box>
