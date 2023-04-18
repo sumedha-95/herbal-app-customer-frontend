@@ -7,13 +7,13 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart(state, action) {
-      const { sellerId, productId, quantity } = action.payload;
+      const { sellerId, productId } = action.payload;
 
       const sellerCartItem = {
         product: {
           _id: productId,
         },
-        quantity,
+        quantity: 1,
       };
 
       // check if seller cart exists in cart array
@@ -21,14 +21,14 @@ const cartSlice = createSlice({
         (item) => item.sellerId === sellerId
       );
       if (sellerCartItemIndex === -1) {
-        cart.push({
+        state.cart.push({
           sellerId,
           sellerCart: [sellerCartItem],
         });
       } else {
         const sellerCart = state.cart[sellerCartItemIndex].sellerCart;
         // check if seller cart products exists
-        const sellerProductIndex = sellerCart.find(
+        const sellerProductIndex = sellerCart.findIndex(
           (item) => item.product._id === productId
         );
         if (sellerProductIndex === -1) {
@@ -46,7 +46,7 @@ const cartSlice = createSlice({
       if (sellerCartItemIndex !== -1) {
         const sellerCart = state.cart[sellerCartItemIndex].sellerCart;
         // check if seller cart products exists
-        const sellerProductIndex = sellerCart.find(
+        const sellerProductIndex = sellerCart.findIndex(
           (item) => item.product._id === productId
         );
         if (sellerProductIndex !== -1) {
@@ -69,7 +69,7 @@ const cartSlice = createSlice({
       if (sellerCartItemIndex !== -1) {
         const sellerCart = state.cart[sellerCartItemIndex].sellerCart;
         // check if seller cart products exists
-        const sellerProductIndex = sellerCart.find(
+        const sellerProductIndex = sellerCart.findIndex(
           (item) => item.product._id === productId
         );
         if (sellerProductIndex !== -1) {

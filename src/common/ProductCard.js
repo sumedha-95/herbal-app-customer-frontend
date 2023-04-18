@@ -4,10 +4,10 @@ import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
-import StarIcon from '@mui/icons-material/Star';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import StarIcon from "@mui/icons-material/Star";
+import { styled } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 
 const renderStarRating = (rating) => {
   const stars = [];
@@ -18,15 +18,24 @@ const renderStarRating = (rating) => {
 };
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  textAlign: 'center',
+  textAlign: "center",
   color: theme.palette.text.secondary,
 }));
 
-
-const ProductCard = ({ name, price, rating,addToCart }) => {
+const ProductCard = ({
+  _id,
+  name,
+  price,
+  rating,
+  imageFirebaseStorageRef,
+  sellerId,
+  addToCart,
+  removeFromCart,
+  isAvailableInCart,
+}) => {
   return (
     <Card
       sx={{
@@ -34,8 +43,6 @@ const ProductCard = ({ name, price, rating,addToCart }) => {
         boxShadow: "0px 8px 25px rgba(0, 0, 0, 0.25)",
         //  "&:hover":{backgroundColor:colors.primary},
         maxWidth: 450,
-        
-        
       }}
     >
       <CardMedia
@@ -44,37 +51,73 @@ const ProductCard = ({ name, price, rating,addToCart }) => {
         height="140"
         boxshadow="0px 8px 25px rgba(0, 0, 0, 0.25)"
         image="../images/list/p-2.png"
-        sx={{mb:5}}
+        sx={{ mb: 5 }}
       />
 
-      
-      <CardActions sx={{ height: 100,mb:2 }}>
-         <Box sx={{ width: '100%' }}>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={6}>
-          <Typography gutterBottom variant="h7" component="div" sx={{ mb:0 , textAlign: "center", fontWeight: "bold" }}>
-            {name}
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography gutterBottom variant="h7" component="div" sx={{ mb:0 , textAlign: "center", fontWeight: "bold" }}>
-            Rs  {price}
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography gutterBottom variant="h7" component="div" sx={{ mt:2 , textAlign: "center", fontWeight: "bold" }}>
-            {renderStarRating(rating)}
-          </Typography>
-       </Grid>
-        <Grid item xs={6}>
-          <Typography gutterBottom variant="h7" component="div" sx={{ mt:2 , textAlign: "center", fontWeight: "bold" }}>
-            <button class="btn btn-success" onClick={() => addToCart()}>
+      <CardActions sx={{ height: 100, mb: 2 }}>
+        <Box sx={{ width: "100%" }}>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            <Grid item xs={6}>
+              <Typography
+                gutterBottom
+                variant="h7"
+                component="div"
+                sx={{ mb: 0, textAlign: "center", fontWeight: "bold" }}
+              >
+                {name}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                gutterBottom
+                variant="h7"
+                component="div"
+                sx={{ mb: 0, textAlign: "center", fontWeight: "bold" }}
+              >
+                Rs {price}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                gutterBottom
+                variant="h7"
+                component="div"
+                sx={{ mt: 2, textAlign: "center", fontWeight: "bold" }}
+              >
+                {renderStarRating(rating)}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                gutterBottom
+                variant="h7"
+                component="div"
+                sx={{ mt: 2, textAlign: "center", fontWeight: "bold" }}
+              >
+                {isAvailableInCart ? (
+                  <button
+                    type="button"
+                    class="btn btn-warning"
+                    onClick={() => removeFromCart(sellerId, _id)}
+                  >
+                    <i class="fa fa fa-minus"></i>
+                  </button>
+                ) : (
+                  <button
+                    class="btn btn-success"
+                    onClick={() => addToCart(sellerId, _id)}
+                  >
                     <i class="fa fa-shopping-cart"></i>
                   </button>
-          </Typography>
-        </Grid>
-      </Grid>
-    </Box>  
+                )}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
       </CardActions>
     </Card>
   );

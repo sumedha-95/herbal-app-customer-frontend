@@ -4,15 +4,15 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../../../common/ProductCard";
 import { getPaginatedProducts } from "../../../service/product.service";
-import Heading from "../../common/Heading"
+import Heading from "../../common/Heading";
+import { cartActions } from "../../../store/cartSlice";
 
 const Recent = () => {
-  const authState = useSelector((state) => state.auth);
-  const mapState = useSelector((state) => state.map);
-
+  const dispatch = useDispatch();
+  const cartState = useSelector((state) => state.cart);
   const [page, setPage] = React.useState(1);
   const handleChange = (event, value) => {
     setPage(value);
@@ -21,32 +21,53 @@ const Recent = () => {
   const [product, setProduct] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
 
+  const addToCart = (sellerId, productId) => {
+    dispatch(cartActions.addToCart({ sellerId, productId }));
+  };
 
-  // const handleSearch = (input) => {
-  //   setKeyword(input);
-  // };
+  const removeFromCart = (sellerId, productId) => {
+    dispatch(cartActions.removeFromCart({ sellerId, productId }));
+  };
+
+  const isExist = (sellerId, productId) => {
+    // find seller cart
+    const sellerCartItemIndex = cartState.cart.findIndex(
+      (item) => item.sellerId === sellerId
+    );
+    if (sellerCartItemIndex !== -1) {
+      const sellerCart = cartState.cart[sellerCartItemIndex].sellerCart;
+      // check if seller cart products exists
+      const sellerProductIndex = sellerCart.findIndex(
+        (item) => item.product._id === productId
+      );
+      if (sellerProductIndex !== -1) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   useEffect(() => {
     let unmounted = false;
 
     const fetchAndSet = async () => {
       const response = await getPaginatedProducts(page, 8, "desc");
-    
+
       if (response.success) {
-        console.log("lllllll",response);
-        if(!unmounted){
+        if (!unmounted) {
           setProduct(response?.data?.content || []);
           setTotalPages(response?.data?.totalPages || 0);
         }
       }
-    }
+    };
 
     fetchAndSet();
 
-    return () =>{
+    return () => {
       unmounted = true;
-    }
-  }, [authState, mapState, page]);
+    };
+  }, [page]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -56,12 +77,14 @@ const Recent = () => {
          placeholderText="Search Pharmacies..."
          /> */}
       </Box>
-      
+
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-        <Heading title='Recent Herbal Products' subtitle='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.' />
+        <Heading
+          title="Recent Herbal Products"
+          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+        />
       </Typography>
 
-      
       <Box
         sx={{
           m: 2,
@@ -73,19 +96,22 @@ const Recent = () => {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          
-          {product.map((item, index) => (
-            
-            <Grid item xs={12} sm={12} md={4} lg={3} key={index}>
+          {product.map((item) => (
+            <Grid item xs={12} sm={12} md={4} lg={3} key={item._id}>
               <Link
                 // to={`/pharmacies/${item._id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-               
                 <ProductCard
+                  _id={item._id}
                   name={item.name}
                   price={item.price}
                   rating={item.rating}
+                  imageFirebaseStorageRef={item.image.firebaseStorageRef}
+                  sellerId={item.seller.user}
+                  addToCart={addToCart}
+                  removeFromCart={removeFromCart}
+                  isAvailableInCart={isExist(item.seller.user, item._id)}
                 />
               </Link>
             </Grid>
@@ -104,7 +130,3 @@ const Recent = () => {
   );
 };
 export default Recent;
-
-
-
-
