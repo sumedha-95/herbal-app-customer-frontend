@@ -13,11 +13,12 @@ export const buildResponse = async (success, data, statusCode) => {
       "Go to Login"
     ).then((res) => {
       if (res.isConfirmed) {
-        window.location.replace("/auth/sign-in");
+        window.location.replace("/signin");
         return;
       }
     });
   } else {
     return { success: success, data: data };
   }
+
 };
