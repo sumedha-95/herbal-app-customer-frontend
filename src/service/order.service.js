@@ -13,3 +13,16 @@ export const processCart = async (cart) => {
 
   return response;
 };
+
+export const createOrder = async (order) => {
+  const response = await getApi()
+    .post("/orders", order)
+    .then((res) => {
+      return buildResponse(true, res.data);
+    })
+    .catch((err) => {
+      return buildResponse(false, err.response.data, err.response.status);
+    });
+
+  return response;
+};
