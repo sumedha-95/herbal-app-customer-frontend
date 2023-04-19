@@ -14,6 +14,7 @@ import Search from "../search/Search";
 import SignIn from "../Signin/Signin";
 import Signup from "../Signup/Signup";
 import Checkout from "../Checkout/Checkout";
+import MyOrders from "../MyOrders/MyOrders";
 
 const Pages = ({ CartItem = [] }) => {
   return (
@@ -36,6 +37,7 @@ const Pages = ({ CartItem = [] }) => {
           <Route exact path="/test" component={Test} />
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/signup" component={Signup} />
+          <Route exact path="/my-orders" component={MyOrders} />
         </Switch>
         <Footer />
       </Router>
