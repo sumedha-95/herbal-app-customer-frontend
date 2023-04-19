@@ -22,6 +22,7 @@ const MyOrders = () => {
   const [page, setPage] = useState(1);
   const [orders, setOrders] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+  const history = useHistory();
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -124,9 +125,7 @@ const MyOrders = () => {
                     >
                       <button
                         class="btn btn-success"
-                        //   onClick={() =>
-                        //     history.push(`/checkout/sellers/${item.sellerId}`)
-                        //   }
+                        onClick={() => history.push(`/orders/${order._id}`)}
                       >
                         View Order
                       </button>

@@ -15,6 +15,7 @@ import SignIn from "../Signin/Signin";
 import Signup from "../Signup/Signup";
 import Checkout from "../Checkout/Checkout";
 import MyOrders from "../MyOrders/MyOrders";
+import Order from "../Order/Order";
 
 const Pages = ({ CartItem = [] }) => {
   return (
@@ -38,6 +39,7 @@ const Pages = ({ CartItem = [] }) => {
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/my-orders" component={MyOrders} />
+          <Route exact path="/orders/:orderId" component={Order} />
         </Switch>
         <Footer />
       </Router>

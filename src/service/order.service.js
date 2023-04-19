@@ -45,3 +45,16 @@ export const getPaginatedSelfOrders = async (page, limit, orderBy) => {
 
   return response;
 };
+
+export const getOrderById = async (orderId) => {
+  const response = await getApi()
+    .get(`/orders/${orderId}`)
+    .then((res) => {
+      return buildResponse(true, res.data);
+    })
+    .catch((err) => {
+      return buildResponse(false, err.response.data, err.response.status);
+    });
+
+  return response;
+};
