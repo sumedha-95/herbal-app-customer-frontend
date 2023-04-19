@@ -6,7 +6,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import colors from "../../components/assets/colors";
+import colors from "../assets/colors";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -14,9 +14,11 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const Cart = () => {
   const cartState = useSelector((state) => state.cart);
+  const history = useHistory();
 
   const getStrigifiedProductNames = (sellerProducts) => {
     return sellerProducts.map((obj) => obj.product.name).join(", ");
@@ -72,10 +74,10 @@ const Cart = () => {
               <Grid item xs={12}>
                 {cartState.cart.map((item) => {
                   return (
-                    <Grid container marginBottom={4}>
+                    <Grid key={item.sellerId} container marginBottom={4}>
                       <Grid item xs={10}>
                         <h3>{item.sellerName}</h3>
-                        {getStrigifiedProductNames(item.sellerCart)}
+                        {getStrigifiedProductNames(item.cartItems)}
                       </Grid>
                       <Grid
                         item
@@ -84,7 +86,14 @@ const Cart = () => {
                         alignItems="flex-end"
                         justifyContent={"flex-end"}
                       >
-                        <button class="btn btn-success">View Cart</button>
+                        <button
+                          class="btn btn-success"
+                          onClick={() =>
+                            history.push(`/seller-cart/${item.sellerId}`)
+                          }
+                        >
+                          View Cart
+                        </button>
                       </Grid>
                     </Grid>
                   );

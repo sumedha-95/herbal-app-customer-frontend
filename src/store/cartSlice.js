@@ -25,38 +25,38 @@ const cartSlice = createSlice({
         state.cart.push({
           sellerId,
           sellerName,
-          sellerCart: [sellerCartItem],
+          deliveryService: "dhl",
+          cartItems: [sellerCartItem],
         });
       } else {
-        const sellerCart = state.cart[sellerCartItemIndex].sellerCart;
+        const sellerCartItems = state.cart[sellerCartItemIndex].cartItems;
         // check if seller cart products exists
-        const sellerProductIndex = sellerCart.findIndex(
+        const sellerProductIndex = sellerCartItems.findIndex(
           (item) => item.product._id === productId
         );
         if (sellerProductIndex === -1) {
-          sellerCart.push(sellerCartItem);
+          sellerCartItems.push(sellerCartItem);
         }
       }
     },
     changeQuantity(state, action) {
-      const { sellerId, productId, increment } = action.payload;
+      const { sellerId, productId, qty } = action.payload;
 
       // find seller cart
       const sellerCartItemIndex = state.cart.findIndex(
         (item) => item.sellerId === sellerId
       );
       if (sellerCartItemIndex !== -1) {
-        const sellerCart = state.cart[sellerCartItemIndex].sellerCart;
+        const sellerCartItems = state.cart[sellerCartItemIndex].cartItems;
         // check if seller cart products exists
-        const sellerProductIndex = sellerCart.findIndex(
+        const sellerProductIndex = sellerCartItems.findIndex(
           (item) => item.product._id === productId
         );
         if (sellerProductIndex !== -1) {
-          const newQty = sellerCart[sellerProductIndex].quantity + increment;
-          if (newQty <= 0) {
-            sellerCart[sellerProductIndex].quantity = 1;
+          if (qty <= 0) {
+            sellerCartItems[sellerProductIndex].quantity = 1;
           } else {
-            sellerCart[sellerProductIndex].quantity = newQty;
+            sellerCartItems[sellerProductIndex].quantity = qty;
           }
         }
       }
@@ -69,17 +69,17 @@ const cartSlice = createSlice({
         (item) => item.sellerId === sellerId
       );
       if (sellerCartItemIndex !== -1) {
-        const sellerCart = state.cart[sellerCartItemIndex].sellerCart;
+        const sellerCartItems = state.cart[sellerCartItemIndex].cartItems;
         // check if seller cart products exists
-        const sellerProductIndex = sellerCart.findIndex(
+        const sellerProductIndex = sellerCartItems.findIndex(
           (item) => item.product._id === productId
         );
         if (sellerProductIndex !== -1) {
-          sellerCart.splice(sellerProductIndex, 1);
+          sellerCartItems.splice(sellerProductIndex, 1);
         }
 
         // cleanup
-        if (sellerCart.length === 0) {
+        if (sellerCartItems.length === 0) {
           state.cart.splice(sellerCartItemIndex, 1);
         }
       }

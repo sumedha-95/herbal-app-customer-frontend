@@ -37,7 +37,7 @@ const Recent = () => {
       (item) => item.sellerId === sellerId
     );
     if (sellerCartItemIndex !== -1) {
-      const sellerCart = cartState.cart[sellerCartItemIndex].sellerCart;
+      const sellerCart = cartState.cart[sellerCartItemIndex].cartItems;
       // check if seller cart products exists
       const sellerProductIndex = sellerCart.findIndex(
         (item) => item.product._id === productId
