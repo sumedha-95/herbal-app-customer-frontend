@@ -84,6 +84,18 @@ const cartSlice = createSlice({
         }
       }
     },
+    removeSellerCart(state, action) {
+      const sellerId = action.payload;
+
+      // find seller cart
+      const sellerCartItemIndex = state.cart.findIndex(
+        (item) => item.sellerId === sellerId
+      );
+      console.log(sellerCartItemIndex);
+      if (sellerCartItemIndex !== -1) {
+        state.cart.splice(sellerCartItemIndex, 1);
+      }
+    },
   },
 });
 

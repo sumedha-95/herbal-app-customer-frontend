@@ -89,7 +89,7 @@ const Cart = () => {
                         <button
                           class="btn btn-success"
                           onClick={() =>
-                            history.push(`/seller-cart/${item.sellerId}`)
+                            history.push(`/checkout/sellers/${item.sellerId}`)
                           }
                         >
                           View Cart

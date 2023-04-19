@@ -23,8 +23,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { createOrder, processCart } from "../../service/order.service";
 import { cartActions } from "../../store/cartSlice";
+import { createCheckoutSession } from "../../service/payment.service";
 
-const SellerCart = () => {
+const Checkout = () => {
   const { sellerId } = useParams();
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cart);
@@ -51,12 +52,23 @@ const SellerCart = () => {
     };
 
     const response = await createOrder(body);
-    setIsLoading(false);
 
-    if (!response.success) {
+    if (response.success) {
+      // clear cart
+      dispatch(cartActions.removeSellerCart(sellerId));
+
       // create checkout session
-      
+      const checkoutSessionResponse = await createCheckoutSession(
+        response.data._id
+      );
+
+      if (checkoutSessionResponse.success) {
+        // redirect to payment gateway
+        window.location.replace(checkoutSessionResponse.data.url);
+      } else console.error(checkoutSessionResponse.data);
     } else console.error(response.data);
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -363,4 +375,4 @@ const SellerCart = () => {
   );
 };
 
-export default SellerCart;
+export default Checkout;
