@@ -27,9 +27,9 @@ export const createFeedback = async (data, productId) => {
   return response;
 };
 
-export const deleteFeedback = async (productId, feedbackId) => {
+export const deleteFeedback = async (feedbackId) => {
   const response = await getApi()
-    .delete(`/feedback/${productId}/${feedbackId}`)
+    .delete(`/feedback/${feedbackId}`)
     .then((res) => {
       return buildResponse(true, res.data);
     })

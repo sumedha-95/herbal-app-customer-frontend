@@ -63,7 +63,7 @@ const ProductDetails = ({ addToCart }) => {
     popDangerPrompt("DELETE", "Do you want to delete Feedback?", "error").then(
       async (res) => {
         if (res.isConfirmed) {
-          const response = await deleteFeedback(productId, id);
+          const response = await deleteFeedback(id);
 
           if (response.success) {
             popAlert(
@@ -115,13 +115,14 @@ const ProductDetails = ({ addToCart }) => {
       if (response.success) {
         console.log("response", response.data);
         if (!unmounted) {
-          const feedbackData = response.data.filter(
-            (feedback) => feedback.product._id === productId
-          );
-          if (feedbackData.length > 0) {
-            setFeedback(feedbackData);
-            console.log(feedbackData[0].product._id);
-          }
+          // const feedbackData = response.data.filter(
+          //   (feedback) => feedback.product._id === productId
+          // );
+          // if (feedbackData.length > 0) {
+          //   setFeedback(feedbackData);
+          //   console.log(feedbackData[0].product._id);
+          // }
+          setFeedback(response?.data);
         }
       }
     };
