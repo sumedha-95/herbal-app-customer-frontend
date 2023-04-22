@@ -1,15 +1,9 @@
 import { getApi } from "../utils/axios";
 import { buildResponse } from "../utils/responseBuilder";
 
-export const getPaginatedProducts = async (page, limit, orderBy) => {
+export const getFeedbacks = async (productId) => {
   const response = await getApi()
-    .get("/products", {
-      params: {
-        page,
-        limit,
-        orderBy,
-      },
-    })
+    .get(`/feedback/${productId}`)
     .then((res) => {
       return buildResponse(true, res.data);
     })
@@ -20,9 +14,22 @@ export const getPaginatedProducts = async (page, limit, orderBy) => {
   return response;
 };
 
-export const getProductById = async (productId) => {
+export const createFeedback = async (data, productId) => {
   const response = await getApi()
-    .get(`/products/${productId}`)
+    .post(`/feedback/${productId}`, data)
+    .then((res) => {
+      return buildResponse(true, res.data);
+    })
+    .catch((err) => {
+      return buildResponse(false, err.response.data, err.response.status);
+    });
+
+  return response;
+};
+
+export const deleteFeedback = async (feedbackId) => {
+  const response = await getApi()
+    .delete(`/feedback/${feedbackId}`)
     .then((res) => {
       return buildResponse(true, res.data);
     })
