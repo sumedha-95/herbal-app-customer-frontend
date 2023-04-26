@@ -19,3 +19,4 @@ export const getPaginatedProducts = async (page,limit,orderBy) => {
   
     return response;
   };
+
