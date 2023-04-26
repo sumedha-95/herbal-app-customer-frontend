@@ -1,9 +1,9 @@
 import { getApi } from "../utils/axios";
 import { buildResponse } from "../utils/responseBuilder";
 
-export const createUser = async (data) => {
+export const login = async (data) => {
   const response = await getApi()
-    .post("/auth/login", data)
+    .post("auth/login", data)
     .then((res) => {
       return buildResponse(true, res.data);
     })

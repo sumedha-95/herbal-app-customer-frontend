@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import colors from "../assets/colors";
 import auth from "../../models/auth";
-import { createUser } from "../../service/auth.service";
+import { login } from "../../service/auth.service";
 import { popAlert } from "../../utils/alerts";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/authSlice";
@@ -24,8 +24,10 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const response = await createUser(inputs);
+    const response = await login(inputs);
+
     if (response.success) {
+          console.log("login",response);
       setLoading(false);
       dispatch(authActions.login(response.data));
       response?.data &&
@@ -123,7 +125,7 @@ const SignIn = () => {
                   disabled={loading}
                   style={{ backgroundColor: "#28ac64" }}
                 >
-                  {loading ? <CircularProgress color="#28ac64" /> : "Sign In"}
+                  {loading ? <CircularProgress  /> : "Sign In"}
                 </Button>
               </Box>
             </form>
