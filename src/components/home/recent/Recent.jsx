@@ -101,7 +101,7 @@ const Recent = () => {
           {product.map((item) => (
             <Grid item xs={12} sm={12} md={4} lg={3} key={item._id}>
               <Link
-                // to={`/pharmacies/${item._id}`}
+                to={`/product/${item._id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <ProductCard

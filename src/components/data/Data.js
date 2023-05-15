@@ -5,7 +5,7 @@ export const nav = [
   },
   {
     text: "My Orders",
-    path: "/test",
+    path: "/my-orders",
   },
   {
     text: "cart",

@@ -9,12 +9,14 @@ import Blog from "../blog/Blog";
 import Services from "../services/Services";
 import Contact from "../contact/Contact";
 import Cart from "../Cart/Cart";
-import Checkout from "../checkout/Checkout";
 import Test from "../Test/Test";
 import Search from "../search/Search";
 import SignIn from "../Signin/Signin";
 import Signup from "../Signup/Signup";
-import SellerCart from "../SellerCart/SellerCart";
+import Checkout from "../Checkout/Checkout";
+import MyOrders from "../MyOrders/MyOrders";
+import Order from "../Order/Order";
+import ProductDetails from "../ProductDetails/ProductDetails";
 
 const Pages = ({ CartItem = [] }) => {
   return (
@@ -29,11 +31,17 @@ const Pages = ({ CartItem = [] }) => {
           {/* <Route exact path='/pricing' component={Pricing} /> */}
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/cart" component={Cart} />
-          <Route exact path="/checkout" component={Checkout} />
+          <Route
+            exact
+            path="/checkout/sellers/:sellerId"
+            component={Checkout}
+          />
           <Route exact path="/test" component={Test} />
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/seller-cart/:sellerId" component={SellerCart} />
+          <Route exact path="/my-orders" component={MyOrders} />
+          <Route exact path="/orders/:orderId" component={Order} />
+          <Route path="/product/:productId" component={ProductDetails} />
         </Switch>
         <Footer />
       </Router>
