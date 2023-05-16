@@ -1,4 +1,4 @@
 const constants = {
-  API_BASE_URL: "http://192.168.49.2:30100/api/v1",
+  API_BASE_URL: process.env.REACT_APP_BACKEND_BASE_URL,
 };
 export default constants;

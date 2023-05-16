@@ -24,6 +24,7 @@ import { useParams } from "react-router-dom";
 import { createOrder, processCart } from "../../service/order.service";
 import { cartActions } from "../../store/cartSlice";
 import { createCheckoutSession } from "../../service/payment.service";
+import { getDownloadURLFromFirebaseRef } from "../../utils/firebase";
 
 const Checkout = () => {
   const { sellerId } = useParams();
@@ -83,8 +84,17 @@ const Checkout = () => {
       const response = await processCart(sellerCartItem);
 
       if (response.success) {
+        const data = response?.data;
+        const cartItems = data?.items || [];
+        for (const cartItem of cartItems) {
+          const firebaseRef = cartItem?.product?.image?.firebaseStorageRef;
+          if (firebaseRef) {
+            const url = await getDownloadURLFromFirebaseRef(firebaseRef);
+            cartItem.product.image = url;
+          }
+        }
         if (!unmounted) {
-          setPCartResult(response.data);
+          setPCartResult(data);
         }
       } else console.error(response.data);
     };
@@ -178,7 +188,7 @@ const Checkout = () => {
                           }}
                         >
                           <img
-                            src="https://media.istockphoto.com/id/1275820756/photo/herbal-and-alternative-medicine-concept.jpg?s=170667a&w=0&k=20&c=RCohvHL4SXHaPKSWwYxgXTrriAg7x5ucRrP82VX8hVc="
+                            src={item.product?.image}
                             alt="product-image"
                             style={{
                               height: 100,
