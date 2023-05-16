@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useRef } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const renderStarRating = (rating) => {
   const stars = [];
@@ -31,6 +32,9 @@ const ProductCard = ({
   removeFromCart,
   isAvailableInCart,
 }) => {
+  const BtnRef = useRef(null);
+  const history = useHistory();
+  
   return (
     <Card
       sx={{
@@ -38,6 +42,10 @@ const ProductCard = ({
         boxShadow: "0px 8px 25px rgba(0, 0, 0, 0.25)",
         //  "&:hover":{backgroundColor:colors.primary},
         maxWidth: 450,
+      }}
+      onClick={(e) => {
+        if (!BtnRef.current.contains(e.target))
+          history.push(`/product/${item._id}`);
       }}
     >
       <CardMedia
@@ -94,16 +102,23 @@ const ProductCard = ({
                 sx={{ mt: 2, textAlign: "center", fontWeight: "bold" }}
               >
                 {isAvailableInCart ? (
-                  <button
+                  <Button
+                    ref={BtnRef}
+                    variant="contained"
+                    color="error"
                     type="button"
-                    class="btn btn-warning"
+                    sx={{ py: 2 }}
                     onClick={() => removeFromCart(item.seller.user, item._id)}
                   >
                     <i class="fa fa fa-minus"></i>
-                  </button>
+                  </Button>
                 ) : (
-                  <button
-                    class="btn btn-success"
+                  <Button
+                    ref={BtnRef}
+                    variant="contained"
+                    color="success"
+                    type="button"
+                    sx={{ py: 2 }}
                     onClick={() =>
                       addToCart(
                         item.seller.user,
@@ -114,7 +129,7 @@ const ProductCard = ({
                     }
                   >
                     <i class="fa fa-shopping-cart"></i>
-                  </button>
+                  </Button>
                 )}
               </Typography>
             </Grid>

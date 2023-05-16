@@ -21,9 +21,12 @@ import {
 } from "../../service/feedback.service";
 import feedback from "../../models/feedback";
 import { popAlert, popDangerPrompt } from "../../utils/alerts";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../../store/cartSlice";
 
-const ProductDetails = ({ addToCart }) => {
+const ProductDetails = () => {
+  const dispatch = useDispatch();
+  const cartState = useSelector((state) => state.cart);
   //get the product ID
   const { productId } = useParams();
 
@@ -38,6 +41,35 @@ const ProductDetails = ({ addToCart }) => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState();
+
+  const addToCart = (sellerId, sellerName, productId, productName) => {
+    dispatch(
+      cartActions.addToCart({ sellerId, sellerName, productId, productName })
+    );
+  };
+
+  const removeFromCart = (sellerId, productId) => {
+    dispatch(cartActions.removeFromCart({ sellerId, productId }));
+  };
+
+  const isProductExistInCart = (sellerId, productId) => {
+    // find seller cart
+    const sellerCartItemIndex = cartState.cart.findIndex(
+      (item) => item.sellerId === sellerId
+    );
+    if (sellerCartItemIndex !== -1) {
+      const sellerCart = cartState.cart[sellerCartItemIndex].cartItems;
+      // check if seller cart products exists
+      const sellerProductIndex = sellerCart.findIndex(
+        (item) => item.product._id === productId
+      );
+      if (sellerProductIndex !== -1) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   //create feedback
   const handleSubmit = async (e) => {
@@ -183,15 +215,37 @@ const ProductDetails = ({ addToCart }) => {
               Price : {productData.price}
             </Typography>
             <Typography>Unit : {productData.unit}</Typography>
-
-            <Button
-              variant="contained"
-              color="success"
-              onClick={() => addToCart(productData)}
-              sx={{ marginTop: 2 }}
-            >
-              Add to Cart
-            </Button>
+            {isProductExistInCart(
+              productData?.seller?.user,
+              productData?._id
+            ) ? (
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() =>
+                  removeFromCart(productData.seller.user, productData._id)
+                }
+                sx={{ marginTop: 2 }}
+              >
+                Remove from Cart
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() =>
+                  addToCart(
+                    productData.seller.user,
+                    productData.seller.name,
+                    productData._id,
+                    productData.name
+                  )
+                }
+                sx={{ marginTop: 2 }}
+              >
+                Add to Cart
+              </Button>
+            )}
           </Box>
         </Grid>
 
