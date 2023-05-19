@@ -34,7 +34,7 @@ const ProductCard = ({
 }) => {
   const BtnRef = useRef(null);
   const history = useHistory();
-  
+
   return (
     <Card
       sx={{
@@ -54,22 +54,18 @@ const ProductCard = ({
         height="140"
         boxshadow="0px 8px 25px rgba(0, 0, 0, 0.25)"
         image="../images/list/p-2.png"
-        sx={{ mb: 5 }}
+        sx={{ my: 5 }}
       />
 
       <CardActions sx={{ height: 100, mb: 2 }}>
         <Box sx={{ width: "100%" }}>
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
+          <Grid container rowSpacing={1}>
             <Grid item xs={6}>
               <Typography
                 gutterBottom
                 variant="h7"
                 component="div"
-                sx={{ mb: 0, textAlign: "center", fontWeight: "bold" }}
+                sx={{ ml: 2, fontWeight: "bold" }}
               >
                 {item.name}
               </Typography>
@@ -79,27 +75,32 @@ const ProductCard = ({
                 gutterBottom
                 variant="h7"
                 component="div"
-                sx={{ mb: 0, textAlign: "center", fontWeight: "bold" }}
+                sx={{
+                  mr: 2,
+
+                  textAlign: "right",
+                }}
               >
                 Rs {item.price}
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={7}>
               <Typography
                 gutterBottom
                 variant="h7"
                 component="div"
-                sx={{ mt: 2, textAlign: "center", fontWeight: "bold" }}
+                sx={{ ml: 2 }}
               >
                 {renderStarRating(item.rating)}
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={5}>
               <Typography
                 gutterBottom
+                fullWidth
                 variant="h7"
                 component="div"
-                sx={{ mt: 2, textAlign: "center", fontWeight: "bold" }}
+                sx={{ mr: 2, textAlign: "right" }}
               >
                 {isAvailableInCart ? (
                   <Button
@@ -107,7 +108,7 @@ const ProductCard = ({
                     variant="contained"
                     color="error"
                     type="button"
-                    sx={{ py: 2 }}
+                    sx={{ py: 2, width: "100%" }}
                     onClick={() => removeFromCart(item.seller.user, item._id)}
                   >
                     <i class="fa fa fa-minus"></i>
@@ -118,7 +119,7 @@ const ProductCard = ({
                     variant="contained"
                     color="success"
                     type="button"
-                    sx={{ py: 2 }}
+                    sx={{ py: 2, width: "100%" }}
                     onClick={() =>
                       addToCart(
                         item.seller.user,

@@ -44,27 +44,27 @@
 
 // export default Header
 
-import React, { useState } from "react"
-import "./header.css"
-import { nav } from "../../data/Data"
-import { Link } from "react-router-dom"
+import React, { useState } from "react";
+import "./header.css";
+import { nav } from "../../data/Data";
+import { Link } from "react-router-dom";
 
 const Header = ({ CartItem = [] }) => {
-  const [navList, setNavList] = useState(false)
-  const [cartCount, setCartCount] = useState(0)
+  const [navList, setNavList] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
   const handleAddToCart = () => {
-    setCartCount(cartCount + 1)
-  }
+    setCartCount(cartCount + 1);
+  };
 
   return (
     <>
       <header>
-        <div className='container flex'>
-          <div className='logo'>
-            <img src='./images/logo.png' alt='' />
+        <div className="container flex">
+          <div className="logo">
+            <img src="./images/logo.png" alt="" />
           </div>
-          <div className='nav'>
+          <div className="nav">
             <ul className={navList ? "small" : "flex"}>
               {nav.map((list, index) => (
                 <li key={index}>
@@ -82,24 +82,27 @@ const Header = ({ CartItem = [] }) => {
               Add to Cart
             </button>
           </div> */}
-          <div className='icon f_flex width'>
-            <i className='fa fa-user icon-circle'></i>
-            <div className='cart'>
-              <Link to='/cart'>
-                <i className='fa fa-shopping-bag icon-circle'></i>
-                <span>{CartItem.length === 0 ? "" : CartItem.length}</span>
+          <div className="icon f_flex width">
+            <div className="cart">
+              <Link to="/cart">
+                <i className="fa fa-shopping-bag icon-circle"></i>
               </Link>
             </div>
           </div>
 
-          <div className='toggle'>
-            <button onClick={() => setNavList(!navList)}>{navList ? <i className='fa fa-times'></i> : <i className='fa fa-bars'></i>}</button>
+          <div className="toggle">
+            <button onClick={() => setNavList(!navList)}>
+              {navList ? (
+                <i className="fa fa-times"></i>
+              ) : (
+                <i className="fa fa-bars"></i>
+              )}
+            </button>
           </div>
         </div>
       </header>
     </>
-  )
-}
+  );
+};
 
-export default Header
-
+export default Header;

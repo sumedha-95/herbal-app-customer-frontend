@@ -123,7 +123,6 @@ const Checkout = () => {
             backgroundColor: colors.white,
             boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)",
             p: 5,
-            minWidth: 1500,
             maxWidth: "80%",
           }}
         >
