@@ -72,7 +72,7 @@ const Recent = () => {
   }, [page]);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, px: 8 }}>
       <Box sx={{ mt: 2, p: 3, width: "80%", ml: 15 }}>
         {/* <SearchBar
          onSearch={handleSearch}
@@ -81,10 +81,7 @@ const Recent = () => {
       </Box>
 
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-        <Heading
-          title="Recent Herbal Products"
-          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
-        />
+        <Heading title="Recent Herbal Products" />
       </Typography>
 
       <Box
@@ -93,13 +90,9 @@ const Recent = () => {
           borderRadius: 15,
         }}
       >
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
+        <Grid container spacing={{ xs: 2, md: 3 }} c>
           {product.map((item) => (
-            <Grid item xs={12} sm={12} md={4} lg={3} key={item._id}>
+            <Grid item xs={3} key={item._id}>
               <ProductCard
                 item={item}
                 addToCart={addToCart}
@@ -113,7 +106,7 @@ const Recent = () => {
           ))}
         </Grid>
       </Box>
-      <Box sx={{ ml: 170 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
         <Pagination
           count={totalPages}
           page={page}

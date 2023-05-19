@@ -80,7 +80,9 @@ const ProductDetails = () => {
 
     if (response.success) {
       response?.data &&
-        popAlert("Success!", response?.data, "success").then((res) => {});
+        popAlert("Success!", "Feedback Created!", "success").then((res) => {
+          setInputs("");
+        });
     } else {
       response?.data?.message &&
         popAlert("Error!", response?.data?.message, "error");
@@ -147,13 +149,6 @@ const ProductDetails = () => {
       if (response.success) {
         console.log("response", response.data);
         if (!unmounted) {
-          // const feedbackData = response.data.filter(
-          //   (feedback) => feedback.product._id === productId
-          // );
-          // if (feedbackData.length > 0) {
-          //   setFeedback(feedbackData);
-          //   console.log(feedbackData[0].product._id);
-          // }
           setFeedback(response?.data);
         }
       }
@@ -179,7 +174,7 @@ const ProductDetails = () => {
             sx={{
               borderRadius: 4,
               backgroundColor: colors.white,
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
               p: 5,
               minWidth: 100,
             }}
@@ -194,7 +189,6 @@ const ProductDetails = () => {
             sx={{
               borderRadius: 4,
               backgroundColor: colors.white,
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
               p: 5,
             }}
           >
@@ -255,8 +249,7 @@ const ProductDetails = () => {
             sx={{
               borderRadius: 4,
               backgroundColor: colors.white,
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-              p: 4,
+
               minWidth: 100,
             }}
           >

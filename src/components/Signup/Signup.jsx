@@ -209,7 +209,7 @@ const Signup = () => {
                 <Button
                   type="submit"
                   variant="contained"
-                  sx={{ py: 2, px: 5 }}
+                  sx={{ py: 2, px: 5, backgroundColor: colors.green }}
                   disabled={loading}
                 >
                   {loading ? <CircularProgress color="secondary" /> : "Save"}
@@ -217,9 +217,7 @@ const Signup = () => {
               </Box>
             </form>
             <Box textAlign={"center"} sx={{ cursor: "pointer" }}>
-              <Typography variant="h7" color="primary">
-                Already have an account?
-              </Typography>
+              <Typography variant="h7">Already have an account?</Typography>
             </Box>
           </Box>
         </Box>
